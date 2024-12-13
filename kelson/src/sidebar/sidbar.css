@@ -1,0 +1,246 @@
+
+.name {
+  color: var(--text-color);
+}
+
+.grid-container {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 8% 1fr;
+  grid-template-areas: "side main"
+    "side main";
+}
+
+
+
+.sidebar {
+  background-color: #FFF;
+  /* background:#e4fffd; */
+  grid-area: side;
+  transition: 0.3s all;
+  position: relative;
+  box-shadow: 8px 8px 8px  #888888;
+}
+
+.sidebar-items {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(70vh - 10px);
+}
+
+.sidebar-items::-webkit-scrollbar {
+ 
+  display: none;
+}
+
+
+.sidebar-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+.sidebar-items::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+
+.sidebar-items::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.main {
+  padding: 20px;
+  color: var(--text-color);
+  background-color: whitesmoke;
+  grid-area: main;
+}
+
+
+.menu li span,
+.submenu li span {
+  margin-left: 25px;
+}
+
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+
+
+.menu-link,
+.submenu-link,
+.logout-link {
+
+  color: var(--links-color);
+  text-decoration: none;
+  display: flex;
+  margin-bottom: 5px;
+  align-items: center;
+  padding: 10px 12px;
+}
+
+.logout-link {
+  gap: 5px;
+}
+
+.sidebar.collapsed .logout-link {
+  flex-direction: column;
+
+  align-items: center;
+}
+
+/* .menu-link:hover,
+.submenu-link:hover,
+.logout-link:hover {
+  border-radius: 10px;
+  color: var(--links-hover-color);
+  background-color: var(--links-background);
+} */
+
+.menu-item:hover {
+
+background-color: #22948e;
+  color: #fff;
+  margin: 10px;
+  border-radius: 10px;
+
+}
+
+.menu-item:hover .MuiListItemIcon-root {
+  color: #fff;
+}
+
+.submenu-toggle,
+.mode-switch {
+  margin-left: auto;
+}
+
+.submenu {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+
+
+.sidebar.collapsed {
+  width: 70px;
+}
+.sidebar.collapsed .image{
+  display: none;
+}
+
+.sidebar.collapsed .toggle {
+  left: 55px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.toggle {
+  position: absolute;
+  top: 8%;
+  left: 215px;
+
+  height: 20px;
+  width: 20px;
+ 
+  background-color: #04aba3;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 18px;
+}
+
+.sidebar.collapsed .hidden-text,
+.sidebar.collapsed .submenu-toggle {
+  display: none;
+  opacity: 1;
+}
+
+.menu-icon,
+.submenu-icon {
+  font-size: 20px;
+}
+
+
+.bottom-content {
+  list-style: none;
+  padding: 10px;
+  position: absolute;
+  margin-top: auto;
+  bottom: 20px;
+}
+
+
+.sidebar-toggle-btn {
+  display: none;
+}
+
+.main::-webkit-scrollbar {
+  display: none;
+}
+
+
+.DensityMediumRoundedIcon{
+  display: none;
+
+}
+
+
+
+/* Add this to your existing CSS */
+
+.menu-item.active {
+  background-color: #066e69;
+  color: #fff;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+/* Optional: Add this to ensure the active state styles are applied correctly */
+
+.menu-item a {
+  color: inherit; /* Make sure the text color is inherited */
+}
+
+
+@media screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 80px auto;
+    grid-template-areas: "side" "nav" "main";
+  }
+
+  .sidebar-toggle-btn {
+    display: block;
+  }
+
+  .sidebar-content-items {
+    display: none;
+  }
+
+  .toggle {
+    display: none;
+  }
+
+  .sidebar.collapsed {
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    left: -100%;
+    transition: left 0.3s ease;
+  }
+
+  .DensityMediumRoundedIcon{
+    display: block;
+  }
+}
+
+
+
+

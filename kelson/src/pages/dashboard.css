@@ -1,0 +1,29 @@
+/* Desktop layout */
+/* .piecharts-container {
+    display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+ 
+  } */
+  
+  .piecharts-container > .MuiBox-root {
+    display: flex;
+    width: 100%;
+    gap: 80px;
+    justify-content: center;
+  }
+  
+
+  @media (max-width: 1024px) {
+    .piecharts-container > .MuiBox-root {
+      flex-direction: column;
+      gap: 20px;
+      /* border: 3px solid blue; */
+    }
+  }
+
+
+
+  
+
