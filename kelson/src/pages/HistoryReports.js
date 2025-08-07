@@ -9,12 +9,14 @@ import { MaterialReactTable, useMaterialReactTable } from 'material-react-table'
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 
+
 const HistoryReports = () => {
   const [data, setData] = useState([]);
   const [selectedCriteria, setSelectedCriteria] = useState(null);
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  
   const [shift, setShift] = useState('');
   const [receipyId, setreceipyId] = useState(); // Ensure this is included
 
@@ -28,14 +30,42 @@ const HistoryReports = () => {
     { label: '1', value: 1 },
     { label: '2', value: 2 },
     { label: '3', value: 3 },
-    { label: 'All', value: 4 }
+    { label: 'All', value: 4 },
+    
   ], []);
 
 
 
   const recipeOptions = useMemo(() => [
-    { label: '1' },
-    { label: '2' }
+    { label: '1', value: 1 },
+    { label: '2', value: 2 },
+    { label: '3', value: 3 },
+    { label: '4', value: 4 },
+    { label: '5', value: 5 },
+    { label: '6', value: 6 },
+    { label: '7', value: 7 },
+    { label: '8', value: 8 },
+    { label: '9', value: 9 },
+    { label: '10', value: 10 },
+    { label: '11', value: 11 },
+    { label: '12', value: 12 },
+    { label: '13', value: 13 },
+    { label: '14', value: 14 },
+    // 
+    { label: '15', value: 15 },
+    { label: '16', value: 16 },
+
+    { label: '17', value: 17 },
+    { label: '18', value: 18 },
+    { label: '19', value: 19 },
+    { label: '20', value: 20 },
+    { label: '21', value: 21 },
+    { label: '22', value: 22 },
+    { label: '23', value: 23 },
+    { label: '24', value: 24 },
+    { label: '25', value: 25 },
+    { label: 'All', value: 26 },
+
   ], []);
 
   const handleRecipeChange = (newValue) => {
@@ -63,15 +93,20 @@ const HistoryReports = () => {
     setData([]);
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   return date.toISOString().split('T')[0];
+  // };
+  const formatDate = (dateStr) => {
+    if (!dateStr || isNaN(new Date(dateStr))) return '';
+    return dayjs(dateStr).format('DD-MM-YYYY');
   };
 
+
   const columns = [
-   
+
     {
-      accessorKey: 'Date.date',
+      accessorKey: 'Det.date',
       header: 'Date',
       Cell: ({ cell }) => formatDate(cell.getValue()),
     },
@@ -80,133 +115,229 @@ const HistoryReports = () => {
       header: 'Time ',
     },
     {
-      accessorKey: 'CycleNo',
+      accessorKey: 'C01',
       header: 'Cycle No',
     },
     {
-      accessorKey: 'CompPreset',
-      header: 'Comp Preset %',
+      accessorKey: 'C02',
+      header: 'Comp Preset',
     },
     {
-      accessorKey: 'SandTemp',
-      header: 'Sand Temp °C',
+      accessorKey: 'C03',
+      header: 'Sand Temp',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CorrectedPreset',
-      header: 'Corrected Preset %',
+      accessorKey: 'C04',
+      header: 'Corrected Preset',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'ReadjustedWater',
-      header: 'Readjusted Water ltr',
+      accessorKey: 'C05',
+      header: 'Readjusted Water ',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CompMeas1',
-      header: 'Comp Meas 1 %',
+      accessorKey: 'C06',
+      header: 'Comp Meas1',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CorrectedwaterMeas1',
-      header: 'Corrected Water Meas 1 ltr',
+      accessorKey: 'C07',
+      header: 'Corrected water Meas1',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CompMeas2',
-      header: 'Comp Meas 2 %',
+      accessorKey: 'C08',
+      header: 'Comp Meas2',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CorrectedwaterMeas2',
-      header: 'Corrected Water Meas 2 ltr',
+      accessorKey: 'C09',
+      header: 'Corrected water Meas2',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CompMeas3',
-      header: 'Comp Meas 3 ltr',
+      accessorKey: 'C10',
+      header: 'Comp Meas3',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CorrectedwaterMeas3',
-      header: 'Corrected Water Meas 3 ltr',
+      accessorKey: 'C11',
+      header: 'Corrected water Meas3',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'Totalwater',
-      header: 'Total Water ltr',
+      accessorKey: 'C12',
+      header: 'Total water',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'Deviation',
-      header: 'Deviation %',
+      accessorKey: 'C13',
+      header: 'Deviation',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'FinalMeasComp',
-      header: 'Final Meas Comp %',
+      accessorKey: 'C14',
+      header: 'Final Meas Comp',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'CycleTime',
-      header: 'Cycle Time sec',
+      accessorKey: 'C15',
+      header: 'Cycle time',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'PresetCompressionStrength',
-      header: 'Preset Compression Strength gm/cm²',
+      accessorKey: 'C16',
+      header: 'Preset Compression Strength',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'MeasureCompressionStrength',
-      header: 'Measure Compression Strength gm/cm²',
+      accessorKey: 'C17',
+      header: 'Measure Compression Strength',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'Additive1Weight',
-      header: 'Additive 1 Weight Bentonite Kg',
+      accessorKey: 'C18',
+      header: 'Bentonite',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'Additive2Weight',
-      header: 'Additive 2 Weight Cold Dust Kg',
+      accessorKey: 'C19',
+      header: 'Coal Dust',
+      Cell: ({ cell }) => {
+        const value = cell.getValue();
+        return value !== null && value !== undefined && !isNaN(value)
+          ? Number(value).toFixed(3)
+          : '';
+      },
     },
     {
-      accessorKey: 'Additive3weight',
-      header: 'Additive 3 Weight Kg',
+      accessorKey: 'C20',
+      header: 'Additive-3  weight',
     },
     {
-      accessorKey: 'NewSandWeight',
-      header: 'New Sand Weight Kg',
+      accessorKey: 'C21',
+      header: 'New Sand Weight ',
     },
     {
-      accessorKey: 'ReturnSand',
-      header: 'Return Sand Kg',
+      accessorKey: 'C22',
+      header: 'Return Sand',
     },
     {
-      accessorKey: 'MachineFirstCycle',
-      header: 'Machine First Cycle ',
+      accessorKey: 'C23',
+      header: 'M/C First Cycle',
     },
     {
-      accessorKey: 'OutputSandTemp',
-      header: 'Output Sand Temp °C',
+      accessorKey: 'C24',
+      header: 'Output Sand Temp',
     },
     {
-      accessorKey: 'MXCTotalCycleTime',
-      header: 'MXC Total Cycle Time Sec',
+      accessorKey: 'C25',
+      header: 'Mixer total cycle time',
     },
     {
       accessorKey: 'mc_code',
       header: 'MC Code',
     },
     {
-      accessorKey: 'BadBatch',
+      accessorKey: 'C31',
       header: 'Bad Batch',
     },
     {
       accessorKey: 'RecipeId',
       header: 'Recipe ID',
     },
-    {
-      accessorKey: 'Shift',
-      header: 'Shift',
-    },
-    {
-      accessorKey: 'Time24',
-      header: 'Time (24H)',
-    },
-    {
-      accessorKey: 'ReceipNo',
-      header: 'Receipt No',
-    },
-    {
-      accessorKey: 'RecName',
-      header: 'Recipe Name',
-    },
+    // {
+    //   accessorKey: 'Shift',
+    //   header: 'Shift',
+    // },
+    // {
+    //   accessorKey: 'Time',
+    //   header: 'Time (24H)',
+    // },
+
+  
   ];
 
 
@@ -214,21 +345,43 @@ const HistoryReports = () => {
   const table = useMaterialReactTable({
     columns,
     data,
-  
+
   });
 
+  // const daycategory = () => {
+  //   const myHeaders = new Headers();
+  //   myHeaders.append("x-api-key", "9a8b7c6d5e4f3g2h1i0j");
+  //   const requestOptions = {
+  //     method: 'GET',
+  //     redirect: 'follow',
+  //     headers: myHeaders,
+  //   };
+  //   const day = fromDate ? fromDate.format('YYYY-MM-DD') : '';
+  //   const recipeId = receipyId ? receipyId : '';
+
+  //   fetch(`https://weaveitapp.microtechsolutions.co.in/api/kelsons/gethistory.php?Day=${day}&ReceipeID=${recipeId}`, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       console.log(result);
+  //       setData(result);
+  //     })
+  //     .catch((error) => console.error(error));
+  // };
   const daycategory = () => {
     const myHeaders = new Headers();
     myHeaders.append("x-api-key", "9a8b7c6d5e4f3g2h1i0j");
+
     const requestOptions = {
       method: 'GET',
       redirect: 'follow',
       headers: myHeaders,
     };
-    const day = fromDate ? fromDate.format('YYYY-MM-DD') : '';
-    const recipeId = receipyId ? receipyId : '';
 
-    fetch(`https://weaveitapp.microtechsolutions.co.in/api/kelsons/gethistory.php?Day=${day}&ReceipeID=${recipeId}`, requestOptions)
+    const day = fromDate ? fromDate.format('YYYY-MM-DD') : '';
+    const recipeId = selectedRecipe?.label === 'All' ? 26 : selectedRecipe?.value || '';
+    
+
+    fetch(`https://weaveitapp.microtechsolutions.net.in/api/kelsons/gethistory.php?Day=${day}&ReceipeID=${recipeId}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -236,7 +389,6 @@ const HistoryReports = () => {
       })
       .catch((error) => console.error(error));
   };
-
 
 
   const periodCategory = () => {
@@ -245,15 +397,15 @@ const HistoryReports = () => {
     const formattedFromDate = fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : '';
     const formattedToDate = toDate ? dayjs(toDate).format('YYYY-MM-DD') : '';
 
-    const recipeIdInt = selectedRecipe ? parseInt(selectedRecipe.label, 10) : '';
-
+    // const recipeIdInt = selectedRecipe ? parseInt(selectedRecipe.label, 10) : '';
+    const recipeIdInt = selectedRecipe?.label === 'All' ? 26 : selectedRecipe?.value || '';
     const requestOptions = {
       method: "GET",
       redirect: "follow",
       headers: myHeaders
     };
 
-    fetch(`https://weaveitapp.microtechsolutions.co.in/api/kelsons/gethistory.php?Fromdt=${formattedFromDate}&Todt=${formattedToDate}&ReceipeID=${recipeIdInt}&Period=1`, requestOptions)
+    fetch(`https://weaveitapp.microtechsolutions.net.in/api/kelsons/gethistory.php?Fromdt=${formattedFromDate}&Todt=${formattedToDate}&ReceipeID=${recipeIdInt}&Period=1&Day&Shift`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -261,6 +413,53 @@ const HistoryReports = () => {
       })
       .catch((error) => console.error(error));
   };
+
+// const periodCategory = () => {
+//   const myHeaders = new Headers();
+//   myHeaders.append("x-api-key", "9a8b7c6d5e4f3g2h1i0j");
+//   const formattedFromDate = fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : '';
+//   const formattedToDate = toDate ? dayjs(toDate).format('YYYY-MM-DD') : '';
+
+//   // Check if "All" is selected
+//   const isAllSelected = selectedRecipe?.label === 'All';
+  
+//   // Create an array of recipe IDs to fetch
+//   const recipeIds = isAllSelected 
+//     ? Array.from({length: 25}, (_, i) => i + 1) // [1, 2, 3, ..., 25]
+//     : [selectedRecipe?.value].filter(Boolean);  // [selected value] if exists
+
+//   // If no recipe is selected, return early
+//   if (recipeIds.length === 0) {
+//     console.log("No recipe selected");
+//     return;
+//   }
+
+//   // Fetch data for all recipes
+//   const fetchPromises = recipeIds.map(recipeId => {
+//     const requestOptions = {
+//       method: "GET",
+//       redirect: "follow",
+//       headers: myHeaders
+//     };
+
+//     return fetch(
+//       `https://weaveitapp.microtechsolutions.net.in/api/kelsons/gethistory.php?Fromdt=${formattedFromDate}&Todt=${formattedToDate}&ReceipeID=${recipeId}&Period=1`, 
+//       requestOptions
+//     ).then(response => response.json());
+//   });
+
+//   // Combine all responses
+//   Promise.all(fetchPromises)
+//     .then(results => {
+//       // Combine all results into a single array
+//       const combinedData = results.flat();
+//       console.log(combinedData);
+//       setData(combinedData);
+//     })
+//     .catch(error => console.error(error));
+// };
+
+
 
   const shiftCategory = () => {
     const myHeaders = new Headers();
@@ -272,11 +471,13 @@ const HistoryReports = () => {
     };
 
     const formattedFromDate = fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : '';
-    const recipeIdInt = selectedRecipe ? parseInt(selectedRecipe.label, 10) : '';
-    const shiftInt = shift.value;
+    // const recipeIdInt = selectedRecipe ? parseInt(selectedRecipe.label, 10) : '';
+    const recipeIdInt = selectedRecipe?.label === 'All' ? 26 : selectedRecipe?.value || '';
+ 
+    const shiftInt = shift?.label === "All" ? 4  : shift.value||"";
 
-
-    fetch(`https://weaveitapp.microtechsolutions.co.in/api/kelsons/gethistory.php?Fromdt=${formattedFromDate}&ReceipeID=${recipeIdInt}&Shift=${shiftInt}`, requestOptions)
+console.log('shiftInt',shiftInt)
+    fetch(`https://weaveitapp.microtechsolutions.net.in/api/kelsons/gethistory.php?Fromdt=${formattedFromDate}&Todt=&ReceipeID=${recipeIdInt}&Shift=${shiftInt}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
@@ -290,23 +491,26 @@ const HistoryReports = () => {
       {/* <Box sx={{ textAlign: 'center', mt: 2 }}>
         <Typography variant='h5'>History Reports</Typography>
       </Box> */}
-  <Box sx={{ textAlign: 'center',}}> 
-  <Typography 
-    variant="h3" 
-    sx={{
-      fontWeight: 'bold',
-      fontSize:'20px',   
-      textTransform: 'uppercase',
-      letterSpacing: '2px',
-      padding: '8px',
-      borderRadius: '8px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      backgroundColor:'#d4fdfb',
-    }}
-  >
-    History Reports
-  </Typography>
-</Box>
+      <Box sx={{
+        textAlign: 'center', display: "flex",
+        alignItems: 'center',
+        justifyContent: 'center', backgroundColor: '#B6B6B4', flex: 1, height: "45px",
+      }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: 'bold',
+            fontSize: '20px',
+            textTransform: 'uppercase',
+            letterSpacing: '2px',
+            padding: '8px',
+            borderRadius: '8px',
+
+          }}
+        >
+          History Reports
+        </Typography>
+      </Box>
 
       <Box className="Criteria" sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: '40px' }}>
         <Typography>Criteria Selection</Typography>
@@ -330,6 +534,9 @@ const HistoryReports = () => {
                   label="From Date"
                   value={fromDate}
                   onChange={(newValue) => setFromDate(newValue)}
+                  slotProps={{
+                    textField: { size: "small", },
+                  }}
                   renderInput={(params) => <TextField {...params} sx={{ mt: 2 }} />}
                 />
                 {selectedCriteria.label === 'Period' && (
@@ -338,6 +545,9 @@ const HistoryReports = () => {
                     value={toDate}
                     onChange={(newValue) => setToDate(newValue)}
                     renderInput={(params) => <TextField {...params} sx={{ mt: 2 }} />}
+                       slotProps={{
+                    textField: { size: "small", },
+                  }}
                   />
                 )}
               </LocalizationProvider>
@@ -345,19 +555,19 @@ const HistoryReports = () => {
           )}
           {['Day', 'Period', 'Shift'].includes(selectedCriteria.label) && (
             <>
-            <Typography>Receipe ID</Typography>
-            <Select
-              id="recipe-selection"
-              options={recipeOptions}
-              onChange={handleRecipeChange}
-              placeholder="Select Recipe"
-              menuPortalTarget={document.body}
-              styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-              sx={{ width: 300, mt: 2 }}
-            />
-                 </>
+              <Typography>Receipe ID</Typography>
+              <Select
+                id="recipe-selection"
+                options={recipeOptions}
+                onChange={handleRecipeChange}
+                placeholder="Select Recipe"
+                menuPortalTarget={document.body}
+                styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+                sx={{ width: 300, mt: 2 }}
+              />
+            </>
           )}
-     
+
           {selectedCriteria.label === 'Shift' && (
             <>
 
@@ -376,7 +586,7 @@ const HistoryReports = () => {
               />
             </>
           )}
-          <Button sx={{background:"#066e69"}}
+          <Button sx={{ background: "#066e69" }}
             onClick={selectedCriteria.label === 'Day' ? daycategory : selectedCriteria.label === 'Period' ? periodCategory : shiftCategory}
             variant="contained"
           >
@@ -386,7 +596,7 @@ const HistoryReports = () => {
         </Box>
       )}
 
-      <Box sx={{ mt: 4,height:'80vh',overflowY:'auto', }} className='tables'>
+      <Box sx={{ mt: 4, height: '80vh', overflowY: 'auto', }} className='tables'>
         <MaterialReactTable table={table} />
       </Box>
     </Box>

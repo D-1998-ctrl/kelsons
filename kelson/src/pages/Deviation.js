@@ -1,15 +1,17 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Select, MenuItem, TextField, Button, } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BarChart } from '@mui/x-charts/BarChart';
-
+import dayjs from 'dayjs';
 
 const criteriaOptions = [
     { value: 'Day', label: 'Day' },
-    { value: 'Shift', label: 'Shift' }
+    { value: 'Shift', label: 'Shift' },
+    // { value: 'period', label: 'period' }
+    
 ];
 
 const shiftOptions = [
@@ -40,12 +42,14 @@ const Deviation = () => {
         setShift(event.target.value);
     };
 
-    const formatDate = (date) => {
-        const d = new Date(date);
-        return d.toISOString().split('T')[0];
-    };
+    // const formatDate = (date) => {
+    //     const d = new Date(date);
+    //     return d.toISOString().split('T')[0];
+    // };
 
-
+const formatDate = (date) => {
+  return dayjs(date).format('YYYY-MM-DD');
+};
 
     const fetchData1 = () => {
         const myHeaders = new Headers();
@@ -60,7 +64,7 @@ const Deviation = () => {
         const fromDateFormatted = formatDate(fromDate);
         const toDateFormatted = formatDate(toDate);
 
-        fetch(`https://weaveitapp.microtechsolutions.co.in/api/kelsons/deviationgraph.php?Fromdt=${fromDateFormatted}&Todt=${toDateFormatted}&Day=1`, requestOptions)
+        fetch(`https://weaveitapp.microtechsolutions.net.in/api/kelsons/deviationgraph.php?Fromdt=${fromDateFormatted}&Todt=${toDateFormatted}&Day=1&Shift`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 setData(result);
@@ -121,12 +125,14 @@ const Deviation = () => {
         };
 
         const fromDateFormatted = formatDate(fromDate);
+        
         // shift= shift.value;
         
 
-        fetch(`https://weaveitapp.microtechsolutions.co.in/api/kelsons/deviationgraph.php?Fromdt=${fromDateFormatted}&Shift=${shift}`, requestOptions)
+        fetch(`https://weaveitapp.microtechsolutions.net.in/api/kelsons/deviationgraph.php?Fromdt=${fromDateFormatted}&Todt=&Day=&Shift=${shift}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
+                console.log('result',result)
                 setData(result);
                 setTotalbatches(result[6]?.Totalbatches || 0);
                 clearFields();
@@ -150,7 +156,9 @@ const Deviation = () => {
 
     return (
         <>
-            <Box sx={{ textAlign: 'center', }}>
+            <Box sx={{ textAlign: 'center',display:"flex",
+                        alignItems:'center',
+                        justifyContent:'center', backgroundColor: '#B6B6B4',flex:1, height:"45px", }}>
                 <Typography
                     variant="h3"
                     sx={{
@@ -160,18 +168,18 @@ const Deviation = () => {
                         letterSpacing: '2px',
                         padding: '8px',
                         borderRadius: '8px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                        backgroundColor: '#d4fdfb',
-                    }}
+                       
+                      }}
                 >
                     Deviation Graph
                 </Typography>
             </Box>
 
-
-            <Box className='deviation-criteria' sx={{ mt: 2 }}>
+{/* 
+            <Box className='deviation-criteria' sx={{ mt: 2 ,display:'flex',alignItems:"center",gap:3}}>
                 <Typography>Criteria Selection</Typography>
                 <Select
+                size='small'
                     id="criteria-selection"
                     value={criteria}
                     onChange={handleCriteriaChange}
@@ -193,12 +201,18 @@ const Deviation = () => {
                                     label="From Date"
                                     value={fromDate}
                                     onChange={(newValue) => setFromDate(newValue)}
+                                    slotProps={{
+                                        textField: { size: "small", },
+                                    }}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                                 <DatePicker
                                     label="To Date"
                                     value={toDate}
                                     onChange={(newValue) => setToDate(newValue)}
+                                    slotProps={{
+                                        textField: { size: "small", },
+                  }}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
                             </LocalizationProvider>
@@ -209,14 +223,22 @@ const Deviation = () => {
                             <Box sx={{ mt: 2, display: 'flex', gap: '20px' }}>
                                 <Box sx={{ mt: 2 }}>
                                     <DatePicker
+                                    fullwidth
                                         label="From Date"
                                         value={fromDate}
                                         onChange={(newValue) => setFromDate(newValue)}
-                                        renderInput={(params) => <TextField {...params} sx={{ width: 250, mb: 2 }} />}
+                                          slotProps={{
+                                        textField: { size: "small", },
+                                    }}
+                                        renderInput={(params) => <TextField {...params} 
+                                        // sx={{ width: 250, mb: 2 }} 
+
+                                        />}
                                     />
                                 </Box>
                                 <Box >
                                     <Select
+                                    size='small'
                                         id="shift-selection"
                                         value={shift}
                                         onChange={handleShiftChange}
@@ -245,7 +267,93 @@ const Deviation = () => {
                         </Box>
                     )}
                 </Box>
+            </Box> */}
+
+
+            <Box className='deviation-criteria' sx={{ mt: 2 }}>
+    {/* First line: Criteria Selection only */}
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+        <Typography>Criteria Selection</Typography>
+        <Select
+            size='small'
+            id="criteria-selection"
+            value={criteria}
+            onChange={handleCriteriaChange}
+            displayEmpty
+            renderValue={(value) => value || <em>Select Criteria</em>}
+            sx={{ width: 300 }}
+        >
+            {criteriaOptions.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                </MenuItem>
+            ))}
+        </Select>
+    </Box>
+
+    {/* Second line: Inputs and buttons based on selected criteria */}
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '40px', mt: 2 }}>
+        {criteria === 'Day' && (
+            <Box sx={{ display: 'flex', gap: '20px' }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="From Date"
+                        value={fromDate}
+                        onChange={(newValue) => setFromDate(newValue)}
+                        slotProps={{ textField: { size: "small" } }}
+                    />
+                    <DatePicker
+                        label="To Date"
+                        value={toDate}
+                        onChange={(newValue) => setToDate(newValue)}
+                        slotProps={{ textField: { size: "small" } }}
+                    />
+                </LocalizationProvider>
             </Box>
+        )}
+
+        {criteria === 'Shift' && (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Box sx={{ display: 'flex', gap: '20px' }}>
+                    <DatePicker
+                        label="From Date"
+                        value={fromDate}
+                        onChange={(newValue) => setFromDate(newValue)}
+                        slotProps={{ textField: { size: "small" } }}
+                    />
+                    <Select
+                        size='small'
+                        id="shift-selection"
+                        value={shift}
+                        onChange={handleShiftChange}
+                        displayEmpty
+                        renderValue={(value) => value || <em>Select Shift</em>}
+                        sx={{ width: 300 }}
+                    >
+                        {shiftOptions.map(option => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </Box>
+            </LocalizationProvider>
+        )}
+
+        {/* Common button block */}
+        {criteria && (
+            <Box sx={{ display: 'flex', gap: '20px' }}>
+                {criteria === 'Day' && (
+                    <Button sx={{ background: "#066e69" }} onClick={fetchData1} variant="contained">Get Data</Button>
+                )}
+                {criteria === 'Shift' && (
+                    <Button sx={{ background: "#066e69" }} onClick={shiftCategory} variant="contained">Get Shift Data</Button>
+                )}
+            </Box>
+        )}
+    </Box>
+</Box>
+
             <Box sx={{ display: 'flex', gap: '20px', mt: 2 }}>
                 <Typography variant='h5' gutterBottom>Total Batches:</Typography>
                 <Typography sx={{ fontWeight: 800 }} variant='h5' gutterBottom>{totalbatches}</Typography>
